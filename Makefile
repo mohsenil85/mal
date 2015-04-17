@@ -12,7 +12,7 @@ PYTHON = python
 
 IMPLS = bash c clojure coffee cpp cs erlang factor forth go haskell java \
 	julia js lua make mal ocaml matlab miniMAL nim perl php ps \
-	python r racket ruby rust scala swift vb guile
+	python r racket ruby rust scala swift vb guile lisp
 
 step0 = step0_repl
 step1 = step1_read_print
@@ -85,6 +85,7 @@ scala_STEP_TO_PROG =   scala/$($(1)).scala
 swift_STEP_TO_PROG =   swift/$($(1))
 vb_STEP_TO_PROG =      vb/$($(1)).exe
 guile_STEP_TO_PROG =   guile/$($(1)).scm
+lisp_STEP_TO_PROG =   lisp/$($(1)).lisp
 
 # Needed some argument munging
 COMMA = ,
@@ -127,6 +128,7 @@ swift_RUNSTEP =   ../$(2) $(3)
 vb_RUNSTEP =      mono ../$(2) --raw $(3)
 # needs TERM=dumb to work with readline
 guile_RUNSTEP =   guile -L ../guile ../$(2) $(3)
+lisp_RUNSTEP =   sbcl --script  ../$(2) $(3)
 
 # Extra options to pass to runtest.py
 mal_TEST_OPTS = --start-timeout 60 --test-timeout 120
