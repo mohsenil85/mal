@@ -4,18 +4,24 @@
 
 Mal is a Clojure inspired Lisp interpreter.
 
-Mal is implemented in 33 different languages:
+Mal is implemented in 40 different languages:
 
+* GNU awk
 * Bash shell
 * C
 * C++
 * C#
 * Clojure
 * CoffeeScript
+* Crystal
+* Elixir
 * Erlang
+* ES6 (ECMAScript 6 / ECMAScript 2015)
+* F#
 * Factor
 * Forth
 * Go
+* Groovy
 * GNU Guile
 * Haskell
 * Java
@@ -32,6 +38,7 @@ Mal is implemented in 33 different languages:
 * PHP
 * Postscript
 * Python
+* RPython
 * R
 * Racket
 * Ruby
@@ -74,6 +81,17 @@ guide](process/guide.md) there is also a [mal/make-a-lisp
 FAQ](docs/FAQ.md) where I attempt to answer some common questions.
 
 ## Building/running implementations
+
+### GNU awk
+
+*The GNU awk implemenation was created by [Miutsuru kariya](https://github.com/kariya-mitsuru)*
+
+The GNU awk implementation of mal has been tested with GNU awk 4.1.1.
+
+```
+cd gawk
+gawk -O -f stepX_YYY.awk
+```
 
 ### Bash 4
 
@@ -138,6 +156,33 @@ cd coffee
 coffee ./stepX_YYY
 ```
 
+### Crystal
+
+*The Crystal implementation of mal was created by [Linda_pp](https://github.com/rhysd)*
+
+The Crystal implemenation of mal has been tested with Crystal 0.7.2.
+
+```
+cd crystal
+crystal run ./stepX_YYY.cr
+    # OR
+make   # needed to run tests
+./stepX_YYY
+```
+
+### Elixir
+
+*The Elixir implementation was created by [Martin Ek (ekmartin)](https://github.com/ekmartin)*
+
+The Elixir implementation of mal has been tested with Elixir 1.0.5.
+
+```
+cd elixir
+mix stepX_YYY
+# Or with readline/line editing functionality:
+iex -S mix stepX_YYY
+```
+
 ### Erlang
 
 *The Erlang implementation was created by [Nathan Fiedler (nlfiedler)](https://github.com/nlfiedler)*
@@ -150,6 +195,34 @@ make
     # OR
 MAL_STEP=stepX_YYY rebar compile escriptize # build individual step
 ./stepX_YYY
+```
+
+### ES6 (ECMAScript 6 / ECMAScript 2015)
+
+The ES6 implementation uses the [babel](https://babeljs.io) compiler
+to generate ES5 compatible JavaScript. The generated code has been
+tested with Node 0.12.4.
+
+```
+cd es6
+make
+node build/stepX_YYY.js
+```
+
+
+### F# ###
+
+*The F# implementation was created by [Peter Stephens (pstephens)](https://github.com/pstephens)*
+
+The F# implementation of mal has been tested on Linux using the Mono
+F# compiler (fsharpc) and the Mono runtime (version 3.12.1). The mono C#
+compiler (mcs) is also necessary to compile the readline dependency. All are
+required to build and run the F# implementation.
+
+```
+cd fsharp
+make
+mono ./stepX_YYY.exe
 ```
 
 ### Factor
@@ -173,15 +246,6 @@ cd forth
 gforth stepX_YYY.fs
 ```
 
-### GNU Guile 2.1+
-
-*The Guile implementation was created by [Mu Lei (NalaGinrut)](https://github.com/NalaGinrut).*
-
-```
-cd guile
-guile -L ./ stepX_YYY.scm
-```
-
 ### Go
 
 The Go implementation of mal requires that go is installed on on the
@@ -193,6 +257,26 @@ make
 ./stepX_YYY
 ```
 
+
+### Groovy
+
+The Groovy implementation of mal requires Groovy to run and has been
+tested with Groovy 1.8.6.
+
+```
+cd groovy
+make
+groovy ./stepX_YYY.groovy
+```
+
+### GNU Guile 2.1+
+
+*The Guile implementation was created by [Mu Lei (NalaGinrut)](https://github.com/NalaGinrut).*
+
+```
+cd guile
+guile -L ./ stepX_YYY.scm
+```
 
 ### Haskell
 
@@ -267,12 +351,11 @@ cd make
 make -f stepX_YYY.mk
 ```
 
-### Nim 0.10.3
+### Nim 0.11.0
 
 *The Nim implementation was created by [Dennis Felsing (def-)](https://github.com/def-)*
 
-Running the Nim implementation of mal requires Nim's current devel branch
-(0.10.3) or later.
+Running the Nim implementation of mal requires Nim 0.11.0 or later.
 
 ```
 cd nim
@@ -353,11 +436,22 @@ cd ps
 gs -q -dNODISPLAY -I./ stepX_YYY.ps
 ```
 
-### Python (2 or 3)
+### Python (2.X or 3.X)
 
 ```
 cd python
 python stepX_YYY.py
+```
+
+### RPython
+
+You must have [rpython](https://rpython.readthedocs.org/) on your path
+(included with [pypy](https://bitbucket.org/pypy/pypy/)).
+
+```
+cd rpython
+make        # this takes a long time
+./stepX_YYY
 ```
 
 ### R
@@ -584,4 +678,3 @@ example, to run step2 tests for every implementation (except MATLAB):
 
 Mal (make-a-lisp) is licensed under the MPL 2.0 (Mozilla Public
 License 2.0). See LICENSE.txt for more details.
-

@@ -41,6 +41,12 @@ In addition, the following will make your task especially easy:
 Here are some examples of languages that have all of the above
 features: JavaScript, Ruby, Python, Lua, R, Clojure.
 
+Michael Fogus has some great blog posts on interesting but less well
+known languages and many of the languages on his lists do not yet have
+any mal implementations:
+* http://blog.fogus.me/2011/08/14/perlis-languages/
+* http://blog.fogus.me/2011/10/18/programming-language-development-the-past-5-years/
+
 Many of the most popular languages already have Mal implementations.
 However, this should not discourage you from creating your own
 implementation in a language that already has one. However, if you go
@@ -543,17 +549,17 @@ diff -urp ../process/step2_eval.txt ../process/step3_env.txt
     (second parameter of `EVAL` called `env`) using the unevaluated
     first parameter (second list element) as the symbol key and the
     evaluated second parameter as the value.
-  * symbol "let*": create a new environment using the current
+  * symbol "let\*": create a new environment using the current
     environment as the outer value and then use the first parameter as
-    a list of new bindings in the "let*" environment. Take the second
-    element of the binding list, call `EVAL` using the new "let*"
+    a list of new bindings in the "let\*" environment. Take the second
+    element of the binding list, call `EVAL` using the new "let\*"
     environment as the evaluation environment, then call `set` on the
-    "let*" environment using the first binding list element as the key
+    "let\*" environment using the first binding list element as the key
     and the evaluated second element as the value. This is repeated
     for each odd/even pair in the binding list. Note in particular,
     the bindings earlier in the list can be referred to by later
     bindings. Finally, the second parameter (third element) of the
-    original `let*` form is evaluated using the new "let*" environment
+    original `let*` form is evaluated using the new "let\*" environment
     and the result is returned as the result of the `let*` (the new
     let environment is discarded upon completion).
   * otherwise: call `eval_ast` on the list and apply the first element
@@ -603,8 +609,8 @@ run. Most Lisp variants tend to be dynamically typed (types of values
 are checked when they are actually used at runtime).
 
 As an aside-aside: The great debate between static and dynamic typing
-debate can be understood by following the money. Advocates of strict
-static typing use words like "correctness" and "safety" and thus get
+can be understood by following the money. Advocates of strict static
+typing use words like "correctness" and "safety" and thus get
 government and academic funding. Advocates of dynamic typing use words
 like "agile" and "time-to-market" and thus get venture capital and
 commercial funding.
@@ -1071,7 +1077,7 @@ macros.
   * token is "'" (single quote): return a new list that contains the
     symbol "quote" and the result of reading the next form
     (`read_form`).
-  * token is "`" (back-tick): return a new list that contains the
+  * token is "\`" (back-tick): return a new list that contains the
     symbol "quasiquote" and the result of reading the next form
     (`read_form`).
   * token is "~" (tilde): return a new list that contains the
@@ -1393,9 +1399,9 @@ diff -urp ../process/step9_try.txt ../process/stepA_mal.txt
 * Add the `readline` core function. TODO
 
 
-Now go to the top level, run the step 9 tests:
+Now go to the top level, run the step A tests:
 ```
-make test^quux^step9
+make test^quux^stepA
 ```
 
 Once you have passed all the non-optional step A tests, it is time to

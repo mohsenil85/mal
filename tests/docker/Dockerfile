@@ -14,7 +14,7 @@ VOLUME /mal
 RUN apt-get -y install make wget curl git
 
 # Deps for compiled languages (C, Go, Rust, Nim, etc)
-RUN apt-get -y install gcc pkg-config 
+RUN apt-get -y install gcc pkg-config
 
 # Deps for Java-based languages (Clojure, Scala, Java)
 RUN apt-get -y install openjdk-7-jdk
@@ -31,6 +31,9 @@ RUN ln -sf nodejs /usr/bin/node
 #
 # Implementation specific installs
 #
+
+# GNU awk
+RUN apt-get -y install gawk
 
 # Bash
 RUN apt-get -y install bash
@@ -55,6 +58,12 @@ RUN touch /.coffee_history && chmod go+w /.coffee_history
 
 # C#
 RUN apt-get -y install mono-mcs
+
+# Elixir
+RUN wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb \
+    && dpkg -i erlang-solutions_1.0_all.deb
+RUN apt-get update
+RUN apt-get -y install elixir
 
 # Erlang R17 (so I can use maps)
 RUN apt-get -y install build-essential libncurses5-dev libssl-dev
@@ -107,13 +116,10 @@ RUN luarocks install linenoise
 RUN npm install -g minimal-lisp
 
 # Nim
-RUN git clone -b devel git://github.com/Araq/Nim.git /tmp/Nim \
-    && cd /tmp/Nim && git clone -b devel --depth 1 git://github.com/nim-lang/csources \
-    && cd /tmp/Nim/csources && sh build.sh \
-    && cd /tmp/Nim && bin/nim c koch \
-    && ./koch boot -d:release \
-    && ./koch install /usr/local/bin \
-    && rm -r /tmp/Nim
+RUN cd /tmp && wget http://nim-lang.org/download/nim-0.11.0.tar.xz \
+    && tar xvJf /tmp/nim-0.11.0.tar.xz && cd nim-0.11.0 \
+    && make && sh install.sh /usr/local/bin \
+    && rm -r /tmp/nim-0.11.0
 
 # OCaml
 RUN apt-get -y install ocaml-batteries-included
