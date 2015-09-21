@@ -8,7 +8,7 @@ step0_repl:
 		--manifest-file .manifest.txt \
 		--load-system mal-lisp \
 		--output step0_repl \
-		--entry mal-lisp:step0
+		--entry mal-lisp:repl
 
 clean:
 	rm *.fasl step0_repl

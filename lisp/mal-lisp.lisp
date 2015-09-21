@@ -1,9 +1,10 @@
 ;;;; mal-lisp.lisp
 (defpackage #:mal-lisp
   (:use #:cl
-     ;; #:linedit
+        #:linedit
+        #:cl-ppcre
         )
-  (:export #:step0))
+  (:export #:repl))
 
 (in-package #:mal-lisp)
 
@@ -13,10 +14,15 @@
   (format t "user> ")
   (force-output))
 
+(defun quit ()
+  (fresh-line)
+  (format t "bye~%")
+  (sb-ext:exit))
+
 (defun mal-read ()
-  ;;(linedit :prompt "user> ")
-  (prompt)
-  (read-line))
+  (handler-case
+      (linedit:linedit :prompt "user> ")
+    (end-of-file () (quit))))
 
 (defun mal-eval (arg)
   arg)
@@ -24,14 +30,9 @@
 (defun mal-print (arg)
   (format t "~A~%" arg))
 
-(defun repl ()
+(defun repl (args)
+  (declare (ignore args))
   (loop
      (mal-print
       (mal-eval
        (mal-read)))))
-
-(defun step0 (args)
-  (declare (ignore args))
-  (repl))
-
-
