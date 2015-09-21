@@ -1,44 +1,37 @@
 ;;;; mal-lisp.lisp
 (defpackage #:mal-lisp
   (:use #:cl
-        #:linedit
-        #:log4cl)
-  (:export #:repl))
+     ;; #:linedit
+        )
+  (:export #:step0))
 
 (in-package #:mal-lisp)
-
 
-;;config
-(defparameter *logger*
-  (open "./mal.log" :direction :output :if-exists :supersede))
-
-(log:config  :stream *logger*)
-
-
-;;;step0 --  repl
+;;step0
 
 (defun prompt ()
   (format t "user> ")
   (force-output))
 
 (defun mal-read ()
-  ;(linedit :prompt "user> ")
+  ;;(linedit :prompt "user> ")
   (prompt)
-  (read-line)
-  )
+  (read-line))
 
-(defun mal-eval (arg) arg)
+(defun mal-eval (arg)
+  arg)
 
 (defun mal-print (arg)
   (format t "~A~%" arg))
 
-(defun repl (args)
-  (declare (ignore args))
+(defun repl ()
   (loop
      (mal-print
       (mal-eval
        (mal-read)))))
 
-(close *logger*)
+(defun step0 (args)
+  (declare (ignore args))
+  (repl))
 
 

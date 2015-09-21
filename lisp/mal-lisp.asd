@@ -2,6 +2,5 @@
 
 (asdf:defsystem #:mal-lisp
   :depends-on (#:cl-ppcre
-               #:linedit
-               #:log4cl)
+               #:linedit)
   :components ((:file "mal-lisp")))
