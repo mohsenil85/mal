@@ -11,7 +11,7 @@ PYTHON = python
 #
 
 IMPLS = awk bash c clojure coffee cpp crystal cs erlang elixir es6 factor forth fsharp go groovy \
-	haskell java julia js lua make mal ocaml matlab miniMAL nim \
+	haskell java julia js lisp lua make mal ocaml matlab miniMAL nim \
 	perl php ps python r racket rpython ruby rust scala swift vb guile
 
 step0 = step0_repl
@@ -76,6 +76,7 @@ java_STEP_TO_PROG =    java/src/main/java/mal/$($(1)).java
 haskell_STEP_TO_PROG = haskell/$($(1))
 julia_STEP_TO_PROG =   julia/$($(1)).jl
 js_STEP_TO_PROG =      js/$($(1)).js
+lisp_STEP_TO_PROG =    lisp/$($(1))
 lua_STEP_TO_PROG =     lua/$($(1)).lua
 make_STEP_TO_PROG =    make/$($(1)).mk
 mal_STEP_TO_PROG =     mal/$($(1)).mal
@@ -96,7 +97,6 @@ scala_STEP_TO_PROG =   scala/$($(1)).scala
 swift_STEP_TO_PROG =   swift/$($(1))
 vb_STEP_TO_PROG =      vb/$($(1)).exe
 guile_STEP_TO_PROG =   guile/$($(1)).scm
-lisp_STEP_TO_PROG =   lisp/$($(1)).lisp
 
 # Needed some argument munging
 COMMA = ,
@@ -124,6 +124,7 @@ haskell_RUNSTEP = ../$(2) $(3)
 java_RUNSTEP =    mvn -quiet exec:java -Dexec.mainClass="mal.$($(1))" $(if $(3), -Dexec.args="$(3)",)
 julia_RUNSTEP =   ../$(2) $(3)
 js_RUNSTEP =      node ../$(2) $(3)
+lisp_RUNSTEP =    ../$(2) $(3)
 lua_RUNSTEP =     ../$(2) $(3)
 make_RUNSTEP =    make -f ../$(2) $(3)
 mal_RUNSTEP =     $(call $(MAL_IMPL)_RUNSTEP,$(1),$(call $(MAL_IMPL)_STEP_TO_PROG,stepA),../$(2),")  #"
@@ -146,7 +147,6 @@ swift_RUNSTEP =   ../$(2) $(3)
 vb_RUNSTEP =      mono ../$(2) --raw $(3)
 # needs TERM=dumb to work with readline
 guile_RUNSTEP =   guile -L ../guile ../$(2) $(3)
-lisp_RUNSTEP =   sbcl --script  ../$(2) $(3)
 
 # Extra options to pass to runtest.py
 mal_TEST_OPTS = --start-timeout 60 --test-timeout 120
