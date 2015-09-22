@@ -47,9 +47,21 @@
 
 ;;step1_read_print
 
-;(defun make-reader (tokens)
-  ;(lambda (cmd) (case cm))
-  ;)
+(defun reader (list-of-tokens)
+  "is instantiated with a list of tokens.  has 2 methods, next, and peek"
+  (let ((position -1)); start just before the list of tokens
+    (lambda (command)
+      (case command
+        ((next) (nth (incf position) list-of-tokens))
+        ((peek) (nth position list-of-tokens))
+        (otherwise 'what-did-you-do)))))
+
+;; (defparameter *r* (reader '(1 2 3)))
+
+;; (funcall *r* 'next)
+;; (funcall *r* 'peek)
+-
+;;(defun read_str )
 
 (defun step1 (args)
   (declare (ignore args))
