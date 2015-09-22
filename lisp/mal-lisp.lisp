@@ -1,16 +1,19 @@
 ;;;; mal-lisp.lisp
+
+;;package
 (defpackage #:mal-lisp
   (:use #:cl
         #:linedit
         #:cl-ppcre
+        #:lisp-unit
         )
   (:export #:step0
            #:step1))
 
 (in-package #:mal-lisp)
+
 
 ;;step0_repl
-
 (defun quit ()
   (fresh-line)
   (format t "bye~%")
@@ -29,7 +32,7 @@
     (end-of-file () (quit))))
 
 (defun mal-eval (arg)
-  arg)
+  (identity arg))
 
 (defun mal-print (arg)
   (format t "~A~%" arg))
@@ -47,23 +50,14 @@
 
 ;;step1_read_print
 
-(defun reader (list-of-tokens)
+(defun reader-maker (list-of-tokens)
   "is instantiated with a list of tokens.  has 2 methods, next, and peek"
-  (let ((position -1)); start just before the list of tokens
-    (lambda (command)
-      (case command
-        ((next) (nth (incf position) list-of-tokens))
-        ((peek) (nth position list-of-tokens))
-        (otherwise 'what-did-you-do)))))
+  (lambda (command)
+    (ecase command
+      ((next) (pop list-of-tokens))
+      ((peek) (car list-of-tokens)))))
 
-;; (defparameter *r* (reader '(1 2 3)))
-
-;; (funcall *r* 'next)
-;; (funcall *r* 'peek)
--
-;;(defun read_str )
 
 (defun step1 (args)
   (declare (ignore args))
-  (repl)
-  )
+  (repl))

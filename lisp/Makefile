@@ -20,4 +20,4 @@ step1_read_print:
 
 
 clean:
-	rm *.fasl step0_repl
+	rm *.fasl step*
