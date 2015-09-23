@@ -72,23 +72,31 @@
     (should be eq nil (funcall r 'peek))))
 
 
+(defun reader-peek (r)
+  (funcall r 'peek ))
 
-(defparameter *re*
+(defun reader-next (r)
+  (funcall r 'next ))
+
+(defvar *re*
   (create-scanner
    "[\\s ,]*(~@|[\\[\\]{}()'`~@]|\"(?:[\\\\].|[^\\\\\"])*\"|;.*|[^\\s \\[\\]{}()'\"`~@,;]*)"))
 
-(defun tokenizer (string)
+(defun tokenize (string)
   (loop
      for c across string
      when (scan-to-strings *re* (string c))
-     collect it))
+     collect c))
 
-(defun read_form (s)
-  (case s
-    ("(" 'read-list)
-    (t 'read-atom)))
+(defun read_form (reader)
+  (if (char= (reader-peek reader) (code-char 40))
+      'read-list
+      'read-atom))
 
-(mapcar #'(lambda (s) (read_form s))(tokenizer "foobar(foobar"))
+
+(defvar rdr (reader-maker (tokenize "i am a string tra la la allalajO")))
+(scan-to-strings *re* "hahhaha")
+(defun read_atom ())
 
 
 (defun step1 (args)
