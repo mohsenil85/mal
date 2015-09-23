@@ -1,11 +1,11 @@
 ;;;; mal-lisp.lisp
 
 ;;package
-(defpackage #:mal-lisp
+ (defpackage #:mal-lisp
   (:use #:cl
         #:linedit
         #:cl-ppcre
-        #:lisp-unit
+        #:should-test
         )
   (:export #:step0
            #:step1))
@@ -35,7 +35,7 @@
   (identity arg))
 
 (defun mal-print (arg)
-  (format t "~A~%" arg))
+  (format t "~a~%" arg))
 
 (defun repl ()
   (loop
@@ -56,6 +56,39 @@
     (ecase command
       ((next) (pop list-of-tokens))
       ((peek) (car list-of-tokens)))))
+
+;;test read
+(deftest reader-maker ()
+  (let ((r (reader-maker '(1 2 3))))
+    (should be = 1 (funcall r 'peek))
+    (should be = 1 (funcall r 'peek))
+    (should be = 1 (funcall r 'next))
+    (should be = 2 (funcall r 'peek))
+    (should be = 2 (funcall r 'next))
+    (should be = 3 (funcall r 'next))
+    (should be eq nil (funcall r 'peek))
+    (should be eq nil (funcall r 'next))
+    (should be eq nil (funcall r 'next))
+    (should be eq nil (funcall r 'peek))))
+
+
+
+(defparameter *re*
+  (create-scanner
+   "[\\s ,]*(~@|[\\[\\]{}()'`~@]|\"(?:[\\\\].|[^\\\\\"])*\"|;.*|[^\\s \\[\\]{}()'\"`~@,;]*)"))
+
+(defun tokenizer (string)
+  (loop
+     for c across string
+     when (scan-to-strings *re* (string c))
+     collect it))
+
+(defun read_form (s)
+  (case s
+    ("(" 'read-list)
+    (t 'read-atom)))
+
+(mapcar #'(lambda (s) (read_form s))(tokenizer "foobar(foobar"))
 
 
 (defun step1 (args)

@@ -3,5 +3,5 @@
 (asdf:defsystem #:mal-lisp
   :depends-on (#:cl-ppcre
                #:linedit
-               #:lisp-unit)
+               #:should-test)
   :components ((:file "mal-lisp")))
