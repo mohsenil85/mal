@@ -1,7 +1,7 @@
 #manifest:
 #	sbcl \
 #	--eval '(ql:write-asdf-manifest-file  (concatenate (quote string)  (sb-posix:getcwd) "/.manifest.txt"))' \
-#	--eval '(sb-ext:exit)'
+#	-eval '(sb-ext:exit)'
 
 step0_repl:
 	buildapp \
